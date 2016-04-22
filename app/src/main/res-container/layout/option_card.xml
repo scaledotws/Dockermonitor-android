@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp"
+    android:layout_margin="@dimen/standard_interlinea"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/standard_margin">
+        <TextView
+            android:id="@+id/title_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dio cane"
+            android:layout_marginBottom="@dimen/standard_interlinea"
+            android:textSize="@dimen/title_card"
+            />
+        <TextView
+            android:id="@+id/image_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Image: Uculu 10:10"
+            android:layout_marginBottom="@dimen/standard_interlinea"
+
+            />
+        <TextView
+            android:id="@+id/command_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Command: echo fucking porco dio"
+            android:layout_marginBottom="@dimen/standard_interlinea"
+
+            />
+        <TextView
+            android:id="@+id/status_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Exit 0"
+            android:layout_marginBottom="@dimen/standard_interlinea"
+
+            />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
