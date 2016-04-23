@@ -1,117 +1,61 @@
 package scalews.dockermonitor;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import containers.ContainerAdapter;
-import models.Container;
 
+import static android.support.design.widget.TabLayout.*;
 
-public class LandingActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class LandingActivity extends AppCompatActivity {
 
-    @Bind(R.id.recycler_view)
-    RecyclerView recyclerView;
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.tab_layout)
+    TabLayout tabLayout;
 
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawer;
-
-    @Bind(R.id.nav_view)
-    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
         ButterKnife.bind(this);
-        recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        PagerAdapter pa = new LandingAdapter(getSupportFragmentManager(), 3);
 
-        ContainerAdapter containerAdapter = new ContainerAdapter()
+        viewPager.setAdapter(pa);
+        viewPager.addOnPageChangeListener(new TabLayoutOnPageChangeListener(tabLayout));
 
-        setSupportActionBar(toolbar);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.running_containers));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.local_images));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.remote_images));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        tabLayout.setOnTabSelectedListener(new OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition(), true);
+            }
 
-        navigationView.setNavigationItemSelectedListener(this);
+            @Override
+            public void onTabUnselected(Tab tab) {
 
+            }
 
+            @Override
+            public void onTabReselected(Tab tab) {
 
+            }
+        });
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.landing, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

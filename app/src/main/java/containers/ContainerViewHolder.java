@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import models.Container;
 import scalews.dockermonitor.R;
 
 /**

@@ -45,6 +45,6 @@ public class ContainerAdapter extends RecyclerView.Adapter<ContainerViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return containers.size();
     }
 }
